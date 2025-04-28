@@ -1,0 +1,167 @@
+
+/* App layout */
+.App {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+.App h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Comment input box */
+.commentbox {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.commentbox textarea {
+  width: 100%;
+  height: 20px;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  resize: none;
+}
+
+.commentbox button {
+  align-self: flex-end;
+  padding: 8px 16px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.commentbox button:hover {
+  background-color: #45a049;
+}
+
+/* Comment container */
+.commentcontainer {
+  margin-top: 20px;
+}
+
+/* Single comment block */
+.commentarea {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  position: relative;
+}
+
+/* Comment text */
+.commenttext {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #444;
+}
+
+/* Buttons container */
+.btncontainer {
+  display: flex;
+  gap: 10px;
+}
+
+.btncontainer button {
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btncontainer button:hover {
+  background-color: #0056b3;
+}
+
+/* Reply input box */
+.reply {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.reply input {
+  padding: 8px;
+  font-size: 15px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  width: 100%;
+}
+
+/* Action buttons under input */
+.actionbar {
+  display: flex;
+  gap: 10px;
+}
+
+.sendreply{
+  color: white;
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #28a745; 
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+.sendreply:hover{
+  background-color: #09611c;
+}
+.cancelreply{
+  color: white;
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: rgb(223, 22, 22); 
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+.cancelreply:hover{
+  background-color: rgb(148, 5, 5);
+}
+/* .actionbar button {
+  padding: 6px 12px;
+  font-size: 14px;
+  background-color: #28a745; */
+  /* color: white; */
+  /* color: #333;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.5s;
+}
+
+.actionbar button:hover {
+  background-color: #09611c;
+} */
+
+/* Nested comments (indented) */
+.comment {
+  margin-left: 20px;
+  margin-top: 10px;
+  border-left: 2px solid #ddd;
+  padding-left: 10px;
+}
+

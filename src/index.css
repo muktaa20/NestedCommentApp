@@ -1,0 +1,16 @@
+.comment-box textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .commentarea {
+    border-left: 2px solid #ccc;
+    padding-left: 10px;
+  }
+  
+  button {
+    margin-right: 5px;
+    margin-top: 5px;
+  }
+  
