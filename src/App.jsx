@@ -8,10 +8,16 @@ const App = () => {
     {
       id: 1,
       message: 'Hi, how are you?',
+      author: 'User1',
+      timestamp: Date.now(),
+      parentId: null,
       children: [
         {
           id: 2,
           message: 'I am fine.',
+          author: 'User2',
+          timestamp: Date.now(),
+          parentId: 1,
           children: [],
         },
       ],
@@ -19,13 +25,19 @@ const App = () => {
     {
       id: 3,
       message: 'What is your name?',
+      author: 'User3',
+      timestamp: Date.now(),
+      parentId: null,
       children: [],
     },
   ]);
 
-  const createNewComment = (message) => ({
-    id: Date.now(),
+  const createNewComment = (message, parentId = null) => ({
+    id: Date.now() + Math.random(),
     message,
+    author: 'You',
+    timestamp: Date.now(),
+    parentId,
     children: [],
   });
 
@@ -42,7 +54,7 @@ const App = () => {
         if (comment.id === parentId) {
           return {
             ...comment,
-            children: [createNewComment(replyMessage), ...comment.children],
+            children: [createNewComment(replyMessage, parentId), ...comment.children],
           };
         }
         if (comment.children.length) {
@@ -67,6 +79,18 @@ const App = () => {
         }));
 
     setComments((prev) => deleteRecursively(prev));
+  };
+
+  const editComment = (commentId, newMessage) => {
+    const editRecursively = (commentList) =>
+      commentList.map((comment) => {
+        if (comment.id === commentId) {
+          return { ...comment, message: newMessage };
+        }
+        return { ...comment, children: editRecursively(comment.children) };
+      });
+
+    setComments((prev) => editRecursively(prev));
   };
 
   const handleKeyDown = (e) => {
@@ -97,6 +121,7 @@ const App = () => {
             comment={comment}
             addReply={addReply}
             deleteComment={deleteComment}
+            editComment={editComment}
           />
         ))}
       </div>
@@ -109,86 +134,105 @@ export default App;
 
 
 
-
 // import React, { useState } from 'react';
 // import NestedComment from './NestedComment';
-// import "./App.css";
+// import './App.css';
 
 // const App = () => {
-//   const [text, settext] = useState("")
+//   const [text, setText] = useState('');
 //   const [comments, setComments] = useState([
 //     {
 //       id: 1,
-//       message: "test",
-//       Children: [
+//       message: 'Hi, how are you?',
+//       children: [
 //         {
 //           id: 2,
-//           message: "test level 1",
-//           Children: [],
+//           message: 'I am fine.',
+//           children: [],
 //         },
 //       ],
 //     },
 //     {
-//       id: 4,
-//       message: "test2",
-//       Children: [],
+//       id: 3,
+//       message: 'What is your name?',
+//       children: [],
 //     },
 //   ]);
 
+//   const createNewComment = (message) => ({
+//     id: Date.now(),
+//     message,
+//     children: [],
+//   });
 
-//   const newComment = (text) => {
-//     return {
-//       id: new Date().getTime(),
-//       message: text,
-//       Children: []
-//     };
-//   }
-  
 //   const addComment = () => {
-//     setComments([...comments, newComment(text)])
-//     settext("")
-//   }
- 
-//   const NestedComments=(comments,cmID,rtext)=>{
-//   comments.map((item)=>{
-//     if(item.id === cmID){
-//       item.Children.unshift(newComment(rtext))
+//     if (text.trim()) {
+//       setComments((prev) => [...prev, createNewComment(text.trim())]);
+//       setText('');
 //     }
-//   })
-//   }
-  
-//   const addReply = (cmID,rtext) => {
-//     const copyComment =  [...comments];
-//     NestedComments(copyComment,cmID,rtext)
 //   };
 
-//   const handleDelete = (id) => {
-//     console.log('Delete comment id:', id);
-//     // You can implement real delete logic here
+//   const addReply = (parentId, replyMessage) => {
+//     const addReplyRecursively = (commentList) =>
+//       commentList.map((comment) => {
+//         if (comment.id === parentId) {
+//           return {
+//             ...comment,
+//             children: [createNewComment(replyMessage), ...comment.children],
+//           };
+//         }
+//         if (comment.children.length) {
+//           return {
+//             ...comment,
+//             children: addReplyRecursively(comment.children),
+//           };
+//         }
+//         return comment;
+//       });
+
+//     setComments((prev) => addReplyRecursively(prev));
+//   };
+
+//   const deleteComment = (commentId) => {
+//     const deleteRecursively = (commentList) =>
+//       commentList
+//         .filter((comment) => comment.id !== commentId)
+//         .map((comment) => ({
+//           ...comment,
+//           children: deleteRecursively(comment.children),
+//         }));
+
+//     setComments((prev) => deleteRecursively(prev));
+//   };
+
+//   const handleKeyDown = (e) => {
+//     if (e.key === 'Enter' && !e.shiftKey) {
+//       e.preventDefault();
+//       addComment();
+//     }
 //   };
 
 //   return (
-//     <div className='App'>
+//     <div className="App">
 //       <h1>Nested Comment App</h1>
-      
-//       <div className='commentbox'>
-//       <textarea 
-//   name='' 
-//   id='' 
-//   value={text} 
-//   onChange={(e) => settext(e.target.value)}
-// ></textarea>
 
-//         <button onClick={addComment}>Add Comment</button>
+//       <div className="commentbox">
+//         <textarea
+//           value={text}
+//           onChange={(e) => setText(e.target.value)}
+//           onKeyDown={handleKeyDown}
+//           placeholder="Add a comment..."
+//         />
+//         <button onClick={addComment}>Comment</button>
 //       </div>
 
 //       <div className="commentcontainer">
-//         {comments.map((item) => (
-//           <NestedComment 
-//             key={item.id} 
-//             comment={item} 
-//             addReply={addReply} 
-//             handleDelete={handleDelete} 
+//         {comments.map((comment) => (
+//           <NestedComment
+//             key={comment.id}
+//             comment={comment}
+//             addReply={addReply}
+//             deleteComment={deleteComment}
 //           />
 //         ))}
 //       </div>
